@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseAudioController;
 use App\Http\Controllers\CourseDocumentController;
 use App\Http\Controllers\CourseImageController;
+use App\Http\Controllers\GeoApiController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserCreatorController;
 use Illuminate\Support\Facades\Route;
@@ -82,5 +83,13 @@ Route::prefix('v1')->group(function () {
 
     // Remove only the creator profile (keep the user)
     Route::delete('users/{id}/creator', [UserCreatorController::class, 'destroyCreator']);
+
+    Route::prefix('geo')->group(function () {
+        Route::get('/countries', [GeoApiController::class, 'countries']);   // list countries
+        Route::get('/states',    [GeoApiController::class, 'states']);      // by country
+        Route::get('/cities',    [GeoApiController::class, 'cities']);      // by state/country
+        Route::get('/towns',     [GeoApiController::class, 'towns']);       // by city/state/country
+        Route::get('/search',    [GeoApiController::class, 'search']);      // quick unified search
+    });
 });
 
