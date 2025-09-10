@@ -86,7 +86,7 @@ class CourseController extends Controller
         try {
             $validated = $req->validate([
                 'subcategory_id' => ['required','integer','exists:subcategories,id'],
-                'user_id'        => ['required','string','max:64','exists:users,id'],
+                'user_id'        => ['required','string','max:64','exists:user,id'],
                 'title'          => ['required','string','max:180'],
                 'slug'           => ['nullable','string','max:200'],
                 'summary'        => ['nullable','string'],

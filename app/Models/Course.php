@@ -16,6 +16,10 @@ class Course extends Model
         'approved'      => 'boolean',
     ];
 
+    public function chapters()
+    {
+        return $this->hasMany(CourseChapter::class);
+    }
     public function subcategory(){ return $this->belongsTo(Subcategory::class); }
     public function sections(){ return $this->hasMany(CourseSection::class)->orderBy('position'); }
     public function videos(){ return $this->hasMany(CourseVideos::class)->orderBy('position'); }

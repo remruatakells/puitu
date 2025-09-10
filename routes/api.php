@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseAudioController;
+use App\Http\Controllers\CourseChapterController;
 use App\Http\Controllers\CourseDocumentController;
 use App\Http\Controllers\CourseImageController;
 use App\Http\Controllers\GeoApiController;
@@ -37,6 +38,12 @@ Route::prefix('v1')->group(function () {
     Route::get('courses/{course}', [CourseController::class, 'show']);
     Route::put('courses/{course}', [CourseController::class, 'update']);
     Route::delete('courses/{course}', [CourseController::class, 'destroy']);
+
+    Route::get('chapters', [CourseChapterController::class, 'index']);
+    Route::post('chapters', [CourseChapterController::class, 'store']);
+    Route::get('chapters/{chapter}', [CourseChapterController::class, 'show']);
+    Route::put('chapters/{chapter}', [CourseChapterController::class, 'update']);
+    Route::delete('chapters/{chapter}', [CourseChapterController::class, 'destroy']);
 
     // Sections (nested under course)
     Route::get('courses/{course}/sections', [CourseSectionController::class, 'index']);
@@ -86,10 +93,15 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('geo')->group(function () {
         Route::get('/countries', [GeoApiController::class, 'countries']);   // list countries
-        Route::get('/states',    [GeoApiController::class, 'states']);      // by country
-        Route::get('/cities',    [GeoApiController::class, 'cities']);      // by state/country
-        Route::get('/towns',     [GeoApiController::class, 'towns']);       // by city/state/country
-        Route::get('/search',    [GeoApiController::class, 'search']);      // quick unified search
+        Route::get('/states', [GeoApiController::class, 'states']);      // by country
+        Route::get('/cities', [GeoApiController::class, 'cities']);      // by state/country
+        Route::get('/towns', [GeoApiController::class, 'towns']);       // by city/state/country
+        Route::get('/search', [GeoApiController::class, 'search']);      // quick unified search
+
+        Route::post('/countries', [GeoApiController::class, 'storeCountry']); // single or bulk
+        Route::post('/states', [GeoApiController::class, 'storeState']);   // single or bulk
+        Route::post('/cities', [GeoApiController::class, 'storeCity']);    // single or bulk
+        Route::post('/towns', [GeoApiController::class, 'storeTown']);
     });
 });
 
